@@ -1,0 +1,67 @@
+$percents: [13,23,48,55,75]
+$gray-color: #e0e0e0
+$white-color:  #ffffff
+
+@function getColor($value)
+	@if $value < 20
+		@return #EB5757
+	@if $value >= 20 and $value < 40
+		@return #F2994A
+	@if $value >= 40 and $value < 50
+		@return #F2C94C
+	@if $value >= 50 and $value < 75
+		@return #6FCF97
+	@else
+		@return #27AE60
+
+@function getPercent($value)
+	$percentValue: percentage($value/100)
+	@return getColor($value) 0%, getColor($value) $percentValue, $gray-color $percentValue
+
+.flex
+	display: flex
+	align-items: center
+	justify-content: center
+
+.cotainer
+	width: 900px
+	display: flex
+	justify-content: space-between
+	border: 1px dashed $gray-color
+	margin: 0 auto
+	padding: 10px
+
+.rectangle
+	width: 145px
+	height: 145px
+	border-radius: 8px
+	background: $gray-color
+	@for $i from 1 through length($percents)
+		&:nth-child(#{$i})
+			.inner-circle
+				background: linear-gradient(180deg, getPercent(nth($percents, $i)))
+			.block-of-persent
+			
+				&::after
+					content: '#{nth($percents, $i)}%'
+					color: getColor(nth($percents, $i))
+					font-size: 30px
+
+.circle
+	width: 115px
+	height: 115px
+	border-radius: 50%
+	background: $white-color
+
+.inner-circle
+	width: 105px
+	height: 105px
+	background: $gray-color
+	border-radius: 50%
+
+.block-of-persent
+	width: 90px
+	height: 90px
+	border-radius: 50%
+	background: $white-color
+
